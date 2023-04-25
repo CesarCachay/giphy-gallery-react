@@ -19,7 +19,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    fetchGifs('cheeseburgers')
+    fetchGifs('cheeseburgers', page)
       .then(res => {
         if (res) {
           console.log('res', res)
@@ -34,7 +34,7 @@ const Home: React.FC = () => {
       .catch((err) => {
         setErrorState({ hasError: true, message: err.message });
       })
-  }, []);
+  }, [page]);
 
   return (
     <FlexContainer

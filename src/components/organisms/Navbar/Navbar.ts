@@ -20,7 +20,7 @@ export const NavbarContainer = styled(FlexContainer)`
 export const StyledLink = styled(Link)`
   display: flex;
   align-items: center;
-  color: #fff;
+  font-size: 20px;
   text-decoration: none;
   color: ${({ theme }) => theme.textTitle};
 
@@ -28,11 +28,7 @@ export const StyledLink = styled(Link)`
     color: ${({ theme }) => theme.placeholderColor};
   }
 
-  h5 {
-    padding: 0;
-    margin: 0 0 0 5px;
-    &:hover {
-      color: ${({ theme }) => theme.placeholderColor};
-    }
+  @media (max-width: 400px) {
+    margin-bottom: 20px;
   }
 `;

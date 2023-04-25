@@ -10,7 +10,7 @@ const Navbar: React.FC<NavbarProps> = ({ toggleTheme, isDarkTheme }) => {
       alignItems='center'
     >
       <StyledLink to='/'>
-        Shine Solar React Challenge
+        Shine Solar Challenge
       </StyledLink>
       <SwitchWithTheme toggleTheme={toggleTheme} isDarkTheme={isDarkTheme} />
     </NavbarContainer>
