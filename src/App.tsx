@@ -1,37 +1,31 @@
-import React from 'react';
-import { createGlobalStyle, ThemeProvider } from 'styled-components';
+import React, { useState } from 'react';
+import { ThemeProvider } from 'styled-components';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Home } from './components/layout';
-import theme from './utils/theme';
+import { GlobalStyle, darkTheme, lighTheme } from './utils/theme';
+import { Navbar } from './components/organisms';
 
 const App: React.FC = () => {
-  const globalStyles = {
-    display: 'block',
-    margin: '0',
-    padding: '0',
-    width: '100%',
-    heigth: '100%',
-    fontFamily: 'Open-Sans, Helvetica, Sans-Serif'
-  };
+  const [theme, setTheme] = useState<string>('dark');
+  const isDarkTheme = theme === 'dark';
 
-  const GlobalStyle = createGlobalStyle`
-    body {
-      ${globalStyles}
-    }
-  `
+  const toggleTheme = () => {
+    setTheme(isDarkTheme ? "light" : "dark");
+  };
 
   return (
     <React.Fragment>
-      <BrowserRouter>
+      <ThemeProvider theme={isDarkTheme ? darkTheme : lighTheme}>
         <GlobalStyle />
-        <ThemeProvider theme={theme}>
+        <BrowserRouter>
+          <Navbar toggleTheme={toggleTheme} isDarkTheme={isDarkTheme} />
           <Routes>
             <Route path='/' element={<Home />} />
           </Routes>
-        </ThemeProvider>
-      </BrowserRouter>
+        </BrowserRouter>
+      </ThemeProvider>
     </React.Fragment>
   )
 }
 
-export default App
+export default App;

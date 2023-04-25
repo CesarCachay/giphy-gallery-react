@@ -11,9 +11,9 @@ const Input = styled.input<InputProps>`
   border-radius: 5px;
   border: 1px solid
     ${(props) =>
-    props.error ? props.theme.colors.red : props.theme.colors.borderColor};
+    props.error ? props.theme.red : props.theme.borderColor};
   ::placeholder {
-    color: ${(props) => props.theme.colors.placeholderColor};
+    color: ${(props) => props.theme.placeholderColor};
     font-style: italic;
   }
   &:focus {
