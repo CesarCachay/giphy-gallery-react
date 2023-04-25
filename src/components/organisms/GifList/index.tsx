@@ -34,6 +34,7 @@ const GifList: React.FC<GifListProps> = ({ giftList }) => {
                 title={gif.title}
                 id={gif.id}
                 picture={gif.picture}
+                url={gif.url}
               />
             </React.Fragment>
           ))}

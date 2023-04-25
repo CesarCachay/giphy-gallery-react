@@ -28,7 +28,7 @@ const Search: React.FC<SearchProps> = ({
         height={height}
         style={{ padding: '0 0 0 50px' }}
         onKeyUp={(event) => {
-          if (event.keyCode === 13) {
+          if (event.key === 'Enter') {
             onSubmit();
           }
         }}
