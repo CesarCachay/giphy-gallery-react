@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useSnackbar } from 'notistack';
 import { FlexContainer, Button } from '@/components/atoms';
 import { StyledGifCard, StyledGifImage } from './GifCard';
 import { GifCardType } from './types';
 
 const GiftCard: React.FC<GifCardType> = ({ id, title, picture, url }) => {
+  const { enqueueSnackbar } = useSnackbar();
   const [favoritesList, setFavoritesList] = useState([]);
 
   useEffect(() => {
@@ -11,6 +13,7 @@ const GiftCard: React.FC<GifCardType> = ({ id, title, picture, url }) => {
   }, []);
 
   const handleOpenTab = (url: string) => {
+    // This will open a new tab and focus on that tab
     window.open(url, '_blank')?.focus();
   };
 
@@ -29,6 +32,10 @@ const GiftCard: React.FC<GifCardType> = ({ id, title, picture, url }) => {
     newArr.push(newFavoriteGifData);
     localStorage.setItem('items', JSON.stringify(newArr));
     setFavoritesList(newArr);
+    // Will trigger the notification to let the user know that the selected gif is saved as favorite
+    enqueueSnackbar('GIF added as favorite!', {
+      variant: 'success'
+    })
   };
 
   return (

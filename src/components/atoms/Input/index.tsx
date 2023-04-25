@@ -9,9 +9,9 @@ const Input = styled.input<InputProps>`
   padding: ${(props) => props.padding || '15px 30px'};
   margin: ${(props) => props.margin || '0'};
   border-radius: 5px;
-  border: 1px solid
+  border: 2px solid
     ${(props) =>
-    props.error ? props.theme.red : props.theme.borderColor};
+    props.error ? 'red' : 'gray'};
   ::placeholder {
     color: ${(props) => props.theme.placeholderColor};
     font-style: italic;

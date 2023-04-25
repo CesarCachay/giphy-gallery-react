@@ -1,6 +1,7 @@
 import React, { useState, Suspense, lazy } from 'react';
 import { ThemeProvider } from 'styled-components';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { SnackbarProvider } from 'notistack';
 import { GlobalStyle, darkTheme, lighTheme } from './utils/theme';
 import { ErrorBoundary } from './components/atoms';
 import { Navbar } from './components/organisms';
@@ -19,16 +20,24 @@ const App: React.FC = () => {
     <React.Fragment>
       <ThemeProvider theme={isDarkTheme ? darkTheme : lighTheme}>
         <ErrorBoundary fallback={<h1>Sorry... there was an uncaught error</h1>}>
-          <Suspense fallback={<div>Loading components ...</div>}>
-            <GlobalStyle />
-            <BrowserRouter>
-              <Navbar toggleTheme={toggleTheme} isDarkTheme={isDarkTheme} />
-              <Routes>
-                <Route path='/' element={<LazyHome />} />
-                <Route path='/favorites' element={<LazyFavorites />} />
-              </Routes>
-            </BrowserRouter>
-          </Suspense>
+          <SnackbarProvider
+            maxSnack={2}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right',
+            }}
+          >
+            <Suspense fallback={<div>Loading components ...</div>}>
+              <GlobalStyle />
+              <BrowserRouter>
+                <Navbar toggleTheme={toggleTheme} isDarkTheme={isDarkTheme} />
+                <Routes>
+                  <Route path='/' element={<LazyHome />} />
+                  <Route path='/favorites' element={<LazyFavorites />} />
+                </Routes>
+              </BrowserRouter>
+            </Suspense>
+          </SnackbarProvider>
         </ErrorBoundary>
       </ThemeProvider>
     </React.Fragment>

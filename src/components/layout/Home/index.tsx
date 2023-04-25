@@ -19,6 +19,7 @@ const Home: React.FC = () => {
 
 
   useEffect(() => {
+    // This is an initial fetch to have some GIFs if there is not a query from the user
     if (query.length > 0) return;
     setIsLoading(true);
     fetchTrendingGifs(page)
@@ -36,6 +37,7 @@ const Home: React.FC = () => {
   }, [page]);
 
   useEffect(() => {
+    // This is a fetching using what the user wants to search in the Giphy API
     if (query.length > 2) {
       setIsLoading(true);
       fetchGifs(query, page)
