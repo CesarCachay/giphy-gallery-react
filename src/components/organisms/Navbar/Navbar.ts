@@ -38,6 +38,6 @@ export const StyledLink = styled(Link)`
   }
 
   @media (max-width: 400px) {
-    margin-bottom: 20px;
+    margin: 20px 0;
   }
 `;
