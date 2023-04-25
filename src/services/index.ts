@@ -7,10 +7,22 @@ export const fetchGifs = async (query: string, page: number) => {
   const limit = 20;
   const offset = (page - 1) * 20;
   try {
-    const response = await axios.get(`${baseUrl}?q=${query}&limit=${limit}&offset=${offset}&page=${page}&api_key=${myApiKey}`);
+    const response = await axios.get(`${baseUrl}search?q=${query}&limit=${limit}&offset=${offset}&page=${page}&api_key=${myApiKey}`);
     const data = response.data;
     return data;
   } catch (error) {
     console.error(error)
   }
 };
+
+export const fetchTrendingGifs = async (page: number) => {
+  const limit = 20;
+  const offset = (page - 1) * 20;
+  try {
+    const response = await axios.get(`${baseUrl}trending?&limit=${limit}&offset=${offset}&page=${page}&api_key=${myApiKey}`);
+    const data = response.data;
+    return data;
+  } catch (error) {
+    console.error(error)
+  }
+}

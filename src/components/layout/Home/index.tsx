@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { FlexContainer, Typography } from '@/components/atoms';
 import { Pagination } from '@/components/molecules';
-import { fetchGifs } from '@/services';
+import { fetchGifs, fetchTrendingGifs } from '@/services';
 import { GifList, SearchWithButton } from '@/components/organisms';
 import { getNumberOfPages, gifFormatter } from '@/helpers/functions';
 import { ErrorStateType, GifType } from '@/helpers/types';
 
 const Home: React.FC = () => {
-  let timeoutKeyPress = null;
   const [page, setPage] = useState(1);
   const [numberOfPages, setNumberOfPages] = useState<number | undefined>();
   const [query, setQuery] = useState('');
@@ -18,31 +17,47 @@ const Home: React.FC = () => {
     message: null
   });
 
+
   useEffect(() => {
-    if (timeoutKeyPress) {
-      clearTimeout(timeoutKeyPress);
-      timeoutKeyPress = null;
-    }
+    if (query.length > 0) return;
+    setIsLoading(true);
+    fetchTrendingGifs(page)
+      .then(res => {
+        const { data, pagination } = res || {};
+        const numbers = getNumberOfPages(pagination.total_count);
+        const formattedList = gifFormatter(data);
+        setNumberOfPages(numbers)
+        setGifList(formattedList);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setErrorState({ hasError: true, message: err.message });
+      })
+  }, [page]);
+
+  useEffect(() => {
     if (query.length > 2) {
-      timeoutKeyPress = setTimeout(() => {
-        setIsLoading(true);
-        fetchGifs(query, page)
-          .then(res => {
-            if (res) {
-              const { data, pagination } = res || {};
-              const numbers = getNumberOfPages(pagination.total_count);
-              const formattedList = gifFormatter(data);
-              setNumberOfPages(numbers)
-              setGifList(formattedList);
-              setIsLoading(false);
-            }
-          })
-          .catch((err) => {
-            setErrorState({ hasError: true, message: err.message });
-          })
-      }, 900)
+      setIsLoading(true);
+      fetchGifs(query, page)
+        .then(res => {
+          if (res) {
+            const { data, pagination } = res || {};
+            const numbers = getNumberOfPages(pagination.total_count);
+            const formattedList = gifFormatter(data);
+            setNumberOfPages(numbers)
+            setGifList(formattedList);
+            setIsLoading(false);
+          }
+        })
+        .catch((err) => {
+          setErrorState({ hasError: true, message: err.message });
+        })
     }
   }, [page, query]);
+
+  const handleSubmit = () => {
+
+  };
 
   return (
     <FlexContainer
