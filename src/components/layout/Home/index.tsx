@@ -2,14 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { FlexContainer, Typography } from '@/components/atoms';
 import { Pagination } from '@/components/molecules';
 import { fetchGifs } from '@/services';
-import { GifList } from '@/components/organisms';
+import { GifList, SearchWithButton } from '@/components/organisms';
 import { getNumberOfPages, gifFormatter } from '@/helpers/functions';
 import { ErrorStateType } from '@/helpers/types';
 
 const Home: React.FC = () => {
+  let timeoutKeyPress = null;
   const [page, setPage] = useState(1);
   const [numberOfPages, setNumberOfPages] = useState<number | undefined>();
-  // const [inputValue, setInputValue] = useState('');
+  const [query, setQuery] = useState('');
   const [gifList, setGifList] = useState([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorState, setErrorState] = useState<ErrorStateType>({
@@ -18,23 +19,30 @@ const Home: React.FC = () => {
   });
 
   useEffect(() => {
-    setIsLoading(true);
-    fetchGifs('cheeseburgers', page)
-      .then(res => {
-        if (res) {
-          console.log('res', res)
-          const { data, pagination } = res || {};
-          const numbers = getNumberOfPages(pagination.total_count);
-          const formattedList = gifFormatter(data);
-          setNumberOfPages(numbers)
-          setGifList(formattedList);
-          setIsLoading(false);
-        }
-      })
-      .catch((err) => {
-        setErrorState({ hasError: true, message: err.message });
-      })
-  }, [page]);
+    if (timeoutKeyPress) {
+      clearTimeout(timeoutKeyPress);
+      timeoutKeyPress = null;
+    }
+    if (query.length > 3) {
+      timeoutKeyPress = setTimeout(() => {
+        setIsLoading(true);
+        fetchGifs(query, page)
+          .then(res => {
+            if (res) {
+              const { data, pagination } = res || {};
+              const numbers = getNumberOfPages(pagination.total_count);
+              const formattedList = gifFormatter(data);
+              setNumberOfPages(numbers)
+              setGifList(formattedList);
+              setIsLoading(false);
+            }
+          })
+          .catch((err) => {
+            setErrorState({ hasError: true, message: err.message });
+          })
+      }, 900)
+    }
+  }, [page, query]);
 
   return (
     <FlexContainer
@@ -44,7 +52,14 @@ const Home: React.FC = () => {
       bgColor='#fff'
     >
       <FlexContainer margin='20px' width='100%' justify='center'>
-        <button>search</button>
+        <SearchWithButton
+          searchValue={query}
+          onChangeValue={(e) => setQuery(e)}
+          placeholder='Type something to search'
+          onSubmit={() => console.log('query', query)}
+          width='100%'
+          height='80px'
+        />
       </FlexContainer>
       {errorState.hasError && <Typography>{errorState.message}</Typography>}
       {isLoading ? (
@@ -52,7 +67,14 @@ const Home: React.FC = () => {
       ) : (
         <GifList giftList={gifList} />
       )}
-      <Pagination page={page} numberOfPages={numberOfPages} setPage={setPage} />
+      {numberOfPages && numberOfPages < 1 && (
+        <Pagination
+          page={page}
+          numberOfPages={numberOfPages}
+          setPage={setPage}
+          isLoading={isLoading}
+        />
+      )}
     </FlexContainer>
   );
 };
