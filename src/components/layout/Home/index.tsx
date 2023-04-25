@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useSnackbar } from 'notistack';
 import { FlexContainer, Typography } from '@/components/atoms';
 import { Pagination } from '@/components/molecules';
 import { fetchGifs, fetchTrendingGifs } from '@/services';
@@ -7,6 +8,7 @@ import { getNumberOfPages, gifFormatter } from '@/helpers/functions';
 import { ErrorStateType, GifType } from '@/helpers/types';
 
 const Home: React.FC = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const [page, setPage] = useState(1);
   const [numberOfPages, setNumberOfPages] = useState<number | undefined>();
   const [query, setQuery] = useState('');
@@ -65,6 +67,9 @@ const Home: React.FC = () => {
     setErrorState({
       hasError: false,
       message: null
+    })
+    enqueueSnackbar('Search input & results cleared!', {
+      variant: 'success'
     })
   };
 

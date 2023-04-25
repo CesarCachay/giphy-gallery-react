@@ -58,13 +58,15 @@ const Favorites = () => {
   };
 
   const removeFromFavorites = (id: string) => {
-    const filteredArr = favoritesArray.filter(item => item.id !== id);
+    const filteredArr = favoritesArray.filter((item: GifType) => item.id !== id);
     localStorage.setItem('items', JSON.stringify(filteredArr));
     setFavoritesArray(filteredArr);
     enqueueSnackbar('GIF added removed from favorite!', {
       variant: 'success'
     });
   };
+
+
 
   return (
     <React.Fragment>

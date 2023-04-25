@@ -40,7 +40,7 @@ const GifList: React.FC<GifListProps> = ({ giftList }) => {
     }
   }, []);
 
-  const handleAddToFavorites = (data: any) => {
+  const handleAddToFavorites = (data: GifType) => {
     const currentFavoritesGif = localStorage.getItem('items');
     let newArr = []
     if (currentFavoritesGif) {
@@ -66,7 +66,7 @@ const GifList: React.FC<GifListProps> = ({ giftList }) => {
                 id={gif.id}
                 picture={gif.picture}
                 url={gif.url}
-                isFavorite={favoritesList.some(favGif => favGif.id === gif.id)}
+                isFavorite={favoritesList.some((favGif: GifType) => favGif.id === gif.id)}
                 handleAddToFavorites={handleAddToFavorites}
               />
             </React.Fragment>
