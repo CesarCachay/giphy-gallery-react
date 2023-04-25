@@ -1,3 +1,4 @@
+import Pagination from "./Pagination";
 import SwitchWithTheme from "./SwitchWithTheme";
 
-export { SwitchWithTheme };
+export { Pagination, SwitchWithTheme };

@@ -1,3 +1,4 @@
 import Navbar from "./Navbar";
+import GifList from "./GifList";
 
-export { Navbar };
+export { Navbar, GifList };
