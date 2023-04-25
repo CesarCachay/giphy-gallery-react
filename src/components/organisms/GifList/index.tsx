@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FlexContainer } from '@/components/atoms';
+import { GifCard } from '@/components/molecules'
 import { GifListProps } from './types';
 import { GifType } from '@/helpers/types';
-import GiftCard from '@/components/molecules/GifCard';
 
 const GifListContainer = styled(FlexContainer)`
   padding-top: 20px;
@@ -28,7 +28,7 @@ const GifList: React.FC<GifListProps> = ({ giftList }) => {
     <GifListContainer>
       {giftList.length > 0 && giftList.map((gif: GifType) => (
         <React.Fragment key={gif.id}>
-          <GiftCard
+          <GifCard
             title={gif.title}
             id={gif.id}
             picture={gif.picture}
