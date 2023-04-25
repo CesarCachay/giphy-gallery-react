@@ -1,8 +1,15 @@
 import React from 'react';
-import { StyledGifCard, StyledGifImage, StyledText } from './FavoriteCard';
+import { StyledGifCard, StyledGifImage, StyledText, StyledButton } from './FavoriteCard';
 import { FavoriteCardType } from './types';
+import { FlexContainer } from '@/components/atoms';
 
-const GiftCard: React.FC<FavoriteCardType> = ({ title, picture, url }) => {
+const GiftCard: React.FC<FavoriteCardType> = ({
+  id,
+  title,
+  picture,
+  url,
+  removeFromFavorites
+}) => {
 
   const handleOpenTab = (url: string) => {
     window.open(url, '_blank')?.focus();
@@ -11,9 +18,17 @@ const GiftCard: React.FC<FavoriteCardType> = ({ title, picture, url }) => {
   return (
     <StyledGifCard shadowLow width='300px'>
       <StyledGifImage src={picture} alt={title} onClick={() => handleOpenTab(url)} />
-      <StyledText>
-        {title}
-      </StyledText>
+      <FlexContainer justify='center' alignItems='center' direction='column'>
+        <StyledButton
+          padding='10px'
+          width='180px'
+          margin='10px 0 0 0'
+          onClick={() => removeFromFavorites(id)}
+        >
+          Remove from Favorites
+        </StyledButton>
+        <StyledText>{title}</StyledText>
+      </FlexContainer>
     </StyledGifCard>
   );
 };

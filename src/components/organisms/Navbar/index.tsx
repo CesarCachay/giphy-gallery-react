@@ -7,6 +7,7 @@ import { NavbarProps } from "./types";
 const Navbar: React.FC<NavbarProps> = ({ toggleTheme, isDarkTheme }) => {
   const location = useLocation();
   const { pathname } = location;
+
   return (
     <NavbarContainer
       container

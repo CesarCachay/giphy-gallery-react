@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { useSnackbar } from 'notistack';
 import styled from 'styled-components';
-import { FlexContainer, Typography } from '@/components/atoms';
+import { Button, FlexContainer, Typography } from '@/components/atoms';
 import { FavoriteCard } from '@/components/molecules';
 import { GifType } from '@/helpers/types';
 
 const FavoriteListContainer = styled(FlexContainer)`
+  width: 100%;
   padding: 20px;
   background-color: #fff;
   display: grid;
@@ -23,32 +25,70 @@ const FavoriteListContainer = styled(FlexContainer)`
   }
 `;
 
+const StyledButton = styled(Button)`
+  height: 40px;
+  width: 240px;
+  margin: 0 0 0 20px;
+  padding: 15px;
+  background-color: ${({ theme }) => theme.bgColor};
+`;
+
+const StyledText = styled.h3`
+  color: ${({ theme }) => theme.textPrimary};
+`;
+
 const Favorites = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const [favoritesArray, setFavoritesArray] = useState([]);
 
   useEffect(() => {
-    const array = localStorage.getItem('items')
-    if (array) {
-      const favoritesList = JSON.parse(array);
+    const items = localStorage.getItem('items');
+    if (items) {
+      const favoritesList = JSON.parse(items);
       setFavoritesArray(favoritesList);
     }
   }, [])
 
+  const handleClearFavorites = () => {
+    localStorage.removeItem('items');
+    setFavoritesArray([]);
+    enqueueSnackbar('Favorite list is empty now!', {
+      variant: 'success'
+    });
+  };
+
+  const removeFromFavorites = (id: string) => {
+    const filteredArr = favoritesArray.filter(item => item.id !== id);
+    localStorage.setItem('items', JSON.stringify(filteredArr));
+    setFavoritesArray(filteredArr);
+    enqueueSnackbar('GIF added removed from favorite!', {
+      variant: 'success'
+    });
+  };
+
   return (
     <React.Fragment>
       {favoritesArray.length > 0 ? (
-        <FavoriteListContainer>
-          {favoritesArray.map((favoriteGif: GifType) => (
-            <React.Fragment key={favoriteGif.id}>
-              <FavoriteCard
-                title={favoriteGif.title}
-                id={favoriteGif.id}
-                picture={favoriteGif.picture}
-                url={favoriteGif.url}
-              />
-            </React.Fragment>
-          ))}
-        </FavoriteListContainer>
+        <FlexContainer container direction='column'>
+          <FlexContainer width='100%' justify='center' bgColor='#ffff' padding='40px'>
+            <StyledButton onClick={() => handleClearFavorites()}>
+              <StyledText>Clear All Favorites</StyledText>
+            </StyledButton>
+          </FlexContainer>
+          <FavoriteListContainer>
+            {favoritesArray.map((favoriteGif: GifType) => (
+              <React.Fragment key={favoriteGif.id}>
+                <FavoriteCard
+                  title={favoriteGif.title}
+                  id={favoriteGif.id}
+                  picture={favoriteGif.picture}
+                  url={favoriteGif.url}
+                  removeFromFavorites={removeFromFavorites}
+                />
+              </React.Fragment>
+            ))}
+          </FavoriteListContainer>
+        </FlexContainer>
       ) : (
         <FlexContainer width='100%' padding='40px' justify='center' resPadding='0'>
           <Typography color='gray'>There are no favorites GIFs yet.</Typography>

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Card } from "@/components/atoms";
+import { Button, Card } from "@/components/atoms";
 
 export const StyledGifCard = styled(Card)`
   background-color: #fff;
@@ -36,4 +36,9 @@ export const StyledText = styled.span`
   text-align: center;
   color: gray;
   margin: 10px 0;
+`;
+
+export const StyledButton = styled(Button)`
+  background-color: ${({ theme }) => theme.bgColor};
+  color: ${({ theme }) => theme.textPrimary};
 `;

@@ -62,6 +62,10 @@ const Home: React.FC = () => {
     setGifList([]);
     setPage(1);
     setNumberOfPages(1);
+    setErrorState({
+      hasError: false,
+      message: null
+    })
   };
 
   return (

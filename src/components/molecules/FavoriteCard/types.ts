@@ -3,4 +3,5 @@ export type FavoriteCardType = {
   id: string;
   picture: string
   url: string;
+  removeFromFavorites: (id: string) => void;
 }

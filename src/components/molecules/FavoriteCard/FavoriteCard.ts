@@ -1,12 +1,12 @@
 import styled from "styled-components";
-import { Card } from "@/components/atoms";
+import { Button, Card } from "@/components/atoms";
 
 export const StyledGifCard = styled(Card)`
   background-color: #fff;
   border: 1px solid #d1d5da;
   border-radius: 4px;
   padding: 10px;
-  height: 160px;
+  height: 190px;
   width: 300px;
   flex-wrap: wrap;
   flex-direction: column;
@@ -35,4 +35,10 @@ export const StyledText = styled.span`
   text-overflow: ellipsis;
   text-align: center;
   color: gray;
+  margin: 10px 0;
+`;
+
+export const StyledButton = styled(Button)`
+  background-color: ${({ theme }) => theme.bgColor};
+  color: ${({ theme }) => theme.textPrimary};
 `;
