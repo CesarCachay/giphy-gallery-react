@@ -1,5 +1,8 @@
 # GIPHY GALLERY PROJECT VITE REACT + TYPESCRIPT
 
+# If you want to test the app live the following link is deployed on Vercel
+- https://giphy-gallery-react.vercel.app/
+
 # To start the project locally you have to clone the repo and run the following commands:
 - npm install
 - Create .env file
