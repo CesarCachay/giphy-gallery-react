@@ -41,7 +41,7 @@ const GifList: React.FC<GifListProps> = ({ giftList }) => {
         </GifListContainer>
       ) : (
         <FlexContainer width='100%' padding='40px' justify='center'>
-          <Typography>There are no results for that query.</Typography>
+          <Typography data-cy='empty-list-text'>There are no results for that query.</Typography>
         </FlexContainer>
       )}
 

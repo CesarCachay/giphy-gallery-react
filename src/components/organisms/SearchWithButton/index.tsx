@@ -7,12 +7,17 @@ import { SearchWithButtonProps } from './types';
 const StyledButton = styled(Button)`
   background-color: ${({ theme }) => theme.bgColor};
   color: ${({ theme }) => theme.textPrimary};
+
+  @media (max-width: 468px) {
+    margin: 10px 0;
+  }
 `;
 
 const SearchWithButton: React.FC<SearchWithButtonProps> = ({
   onChangeValue,
   searchValue,
   onSubmit,
+  onClear,
   placeholder,
   width,
   height
@@ -39,9 +44,10 @@ const SearchWithButton: React.FC<SearchWithButtonProps> = ({
         width='200px'
         margin='0 0 0 20px'
         padding='15px'
-        onClick={() => onSubmit()}
+        onClick={() => onClear()}
+        data-cy='clear-input-search-button'
       >
-        Search
+        Clear
       </StyledButton>
     </FlexContainer>
   );

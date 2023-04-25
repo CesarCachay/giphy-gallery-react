@@ -6,7 +6,7 @@ export const StyledGifCard = styled(Card)`
   border: 1px solid #d1d5da;
   border-radius: 4px;
   padding: 10px;
-  height: 160px;
+  height: 190px;
   width: 300px;
   flex-wrap: wrap;
   flex-direction: column;
@@ -26,4 +26,14 @@ export const StyledGifImage = styled.img`
   width: 150px;
   height: 100px;
   cursor: pointer;
+`;
+
+export const StyledText = styled.span`
+  width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  color: gray;
+  margin: 10px 0;
 `;

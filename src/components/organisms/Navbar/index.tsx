@@ -14,9 +14,9 @@ const Navbar: React.FC<NavbarProps> = ({ toggleTheme, isDarkTheme }) => {
       justify='space-between'
       alignItems='center'
     >
-      <StyledTitle>Giphy Gallery</StyledTitle>
+      <StyledTitle data-cy='navbar-title'>Giphy Gallery</StyledTitle>
       <FlexContainer width="100%" justify='space-between' alignItems='center' margin="10px 0 0 0">
-        <StyledLink to={pathname === '/' ? '/favorites' : '/'}>
+        <StyledLink to={pathname === '/' ? '/favorites' : '/'} data-cy='toggle-link'>
           {pathname === '/' ? 'Go to Favorites' : 'Go back'}
         </StyledLink>
         <SwitchWithTheme toggleTheme={toggleTheme} isDarkTheme={isDarkTheme} />

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSnackbar } from 'notistack';
 import { FlexContainer, Button } from '@/components/atoms';
-import { StyledGifCard, StyledGifImage } from './GifCard';
+import { StyledGifCard, StyledGifImage, StyledText } from './GifCard';
 import { GifCardType } from './types';
 
 const GiftCard: React.FC<GifCardType> = ({ id, title, picture, url }) => {
@@ -41,15 +41,17 @@ const GiftCard: React.FC<GifCardType> = ({ id, title, picture, url }) => {
   return (
     <StyledGifCard shadowLow width='300px'>
       <StyledGifImage src={picture} alt={title} onClick={() => handleOpenTab(url)} />
-      <FlexContainer justify='center'>
+      <FlexContainer justify='center' alignItems='center' direction='column'>
         <Button
           padding='10px'
           width='150px'
           bgColor='black'
+          margin='10px 0 0 0'
           onClick={() => handleAddToFavorites()}
         >
           Add To Favorites
         </Button>
+        <StyledText>{title}</StyledText>
       </FlexContainer>
     </StyledGifCard>
   );

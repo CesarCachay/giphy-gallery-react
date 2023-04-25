@@ -57,8 +57,11 @@ const Home: React.FC = () => {
     }
   }, [page, query]);
 
-  const handleSubmit = () => {
-
+  const handleClear = () => {
+    setQuery('');
+    setGifList([]);
+    setPage(1);
+    setNumberOfPages(1);
   };
 
   return (
@@ -72,6 +75,7 @@ const Home: React.FC = () => {
         <SearchWithButton
           searchValue={query}
           onChangeValue={(e) => setQuery(e)}
+          onClear={() => handleClear()}
           placeholder='Type something to search'
           onSubmit={() => console.log('query', query)}
           width='100%'
