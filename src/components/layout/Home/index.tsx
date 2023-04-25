@@ -4,14 +4,14 @@ import { Pagination } from '@/components/molecules';
 import { fetchGifs } from '@/services';
 import { GifList, SearchWithButton } from '@/components/organisms';
 import { getNumberOfPages, gifFormatter } from '@/helpers/functions';
-import { ErrorStateType } from '@/helpers/types';
+import { ErrorStateType, GifType } from '@/helpers/types';
 
 const Home: React.FC = () => {
   let timeoutKeyPress = null;
   const [page, setPage] = useState(1);
   const [numberOfPages, setNumberOfPages] = useState<number | undefined>();
   const [query, setQuery] = useState('');
-  const [gifList, setGifList] = useState([]);
+  const [gifList, setGifList] = useState<Array<GifType>>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorState, setErrorState] = useState<ErrorStateType>({
     hasError: false,
@@ -23,7 +23,7 @@ const Home: React.FC = () => {
       clearTimeout(timeoutKeyPress);
       timeoutKeyPress = null;
     }
-    if (query.length > 3) {
+    if (query.length > 2) {
       timeoutKeyPress = setTimeout(() => {
         setIsLoading(true);
         fetchGifs(query, page)
@@ -63,11 +63,13 @@ const Home: React.FC = () => {
       </FlexContainer>
       {errorState.hasError && <Typography>{errorState.message}</Typography>}
       {isLoading ? (
-        <Typography>Loading ...</Typography>
+        <FlexContainer width='100%' padding='40px' justify='center'>
+          <Typography>Loading ...</Typography>
+        </FlexContainer>
       ) : (
         <GifList giftList={gifList} />
       )}
-      {numberOfPages && numberOfPages < 1 && (
+      {numberOfPages && numberOfPages > 1 && (
         <Pagination
           page={page}
           numberOfPages={numberOfPages}
